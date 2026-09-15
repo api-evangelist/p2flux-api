@@ -1,0 +1,54 @@
+generated: '2026-09-15'
+method: probed
+source: live probes of /.well-known/* on every host the record knows
+api: P2Flux API
+summary: >-
+  p2flux.com serves two real machine-readable discovery documents under /.well-known/:
+  an APIs.json index and an API onboarding descriptor (both HTTP 200, saved verbatim).
+  All other /.well-known/ paths return HTTP 403 — verified as a blanket catch-all (a
+  nonsense path returns 403 too), so there is no served security.txt, OpenID, OAuth or
+  agent-card document. The api and api-test hosts return 404 for every /.well-known path.
+hosts:
+  - host: p2flux.com
+    documents:
+      - path: /.well-known/apis.json
+        status: 200
+        file: p2flux-api-apis.json
+      - path: /.well-known/api-onboarding
+        status: 200
+        file: p2flux-api-api-onboarding.json
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+  - host: api.p2flux.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: api-test.p2flux.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+notes:
+  - The 403 on unknown /.well-known paths at p2flux.com is a catch-all deny, not a
+    forbidden real document (a random /.well-known/nonsense path returns 403 as well).
+  - The APIs.json (aid p2flux.com:p2flux) and api-onboarding (aod 0.1, maturity
+    self-serve, auth none) are the served, load-bearing well-known documents.

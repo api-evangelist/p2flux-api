@@ -1,0 +1,87 @@
+generated: '2026-09-15'
+method: searched
+source: >-
+  https://p2flux.com/docs/api.html, https://p2flux.com/docs/errors.html,
+  https://p2flux.com/docs/sdks.html and the OpenAPI contract.
+api: P2Flux API
+summary: >-
+  Cross-cutting runtime semantics for P2Flux. The API is unauthenticated POST-with-JSON;
+  authorization is a signed capability plus the payer's EIP-712 signature. Amounts are
+  always decimal strings, never JSON numbers. Retries are made safe structurally rather
+  than with an idempotency key.
+auth_style: >-
+  No API key or Authorization header. In-body HMAC-signed capabilities (p2f1./p2setup2./
+  p2s2./p2cancel1./p2refund1.) plus payer EIP-712 wallet signatures. See
+  authentication/p2flux-api-authentication.yml.
+idempotency:
+  coverage: full
+  mechanism: structural (no client-supplied key)
+  header: none
+  scope:
+    - createPayment / sponsorPayment (one-time settlement)
+    - charge (recurring)
+    - resolvePayment / verifyPayment / recoverPayment / recoverCharge (reads/recovery)
+    - subscriptionStatus
+    - verifyRefund
+  description: >-
+    P2Flux publishes no Idempotency-Key header and states one is not needed: a one-time
+    payment is settled exactly once by the contract's on-chain replay guard, and a
+    recurring charge is allowed at most once per billing period. Every write is therefore
+    safe to retry with the identical request — the docs and both SDKs say so explicitly
+    (charge() is "safe to retry"; the MerchantAction WAIT verdict means "ask again about
+    the SAME transaction, never start another one"). The exactly-once guarantee is
+    enforced by protocol/contract semantics, not by a caller-controlled key. The one gap:
+    refund idempotency is NOT enforced by P2Flux — neither SDK tracks whether a payment
+    was already refunded, so an integration must dedupe refunds itself.
+reversibility:
+  grade: documented
+  applies: true
+  reversal_paths:
+    - surface: one-time payment
+      reversal: refund
+      operations: [prepareRefund, verifyRefund, resolveRefund]
+      window: >-
+        No bounded money-back window is stated; a refund locks its terms from the
+        original on-chain settlement and can be issued against it. (The 15-minute
+        expiry documented for refunds applies to the refund TOKEN, not to how long a
+        payment stays refundable.)
+      docs: https://p2flux.com/docs/refunds.html
+    - surface: subscription / recurring authorization
+      reversal: cancel / revoke allowance
+      operations:
+        - prepareSubscriptionCancellation
+        - createCancellationSession
+        - prepareAllowanceRevocation
+        - createAllowanceRestoreSession
+      window: Customer-owned; can be cancelled at any time on-chain before the next charge.
+      docs: https://p2flux.com/docs/subscriptions.html
+  note: >-
+    Reversal operations exist and are documented (grade documented), but no explicit
+    time-bounded refund window is published, so this is not graded verified. Refunds are
+    a merchant-initiated on-chain transfer from the merchant wallet, not a P2Flux-held
+    balance clawback.
+dry_run_mode: na
+pagination:
+  style: none
+  note: >-
+    The API is transactional (one payment/subscription/refund per call); there are no
+    list/collection endpoints, so there is no pagination surface.
+amounts:
+  representation: decimal strings only (e.g. "10.00"), never JSON numbers
+  pattern: '^\d{1,12}(\.\d{1,6})?$'
+  token: USDC (6 decimals)
+  reason: binary floating point cannot represent decimal prices exactly, and this is money.
+versioning:
+  scheme: URL path (/v1/...) plus info.version 1.0.0
+error_envelope:
+  shape: '{ "error": <ErrorCode>, "action": <MerchantAction>, ... }'
+  format: custom (NOT RFC 9457 problem+json)
+  extra_keys: code-specific detail such as retry_after, confirmations, as_of_block
+  see: errors/p2flux-api-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  headers: [Retry-After]
+  body_field: retry_after
+  see: rate-limits/p2flux-api-rate-limits.yml
+request_id_tracing:
+  documented: false

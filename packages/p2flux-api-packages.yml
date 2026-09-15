@@ -1,0 +1,64 @@
+generated: '2026-09-15'
+method: searched
+source: >-
+  https://p2flux.com/docs/sdks.html plus registry metadata from
+  registry.npmjs.org and repo.packagist.org, and the P2Flux GitHub org.
+api: P2Flux API
+summary: >-
+  Two official first-party client SDKs over the same HTTP API (JavaScript/TypeScript
+  on npm, PHP on Packagist), plus an official Laravel framework integration built on
+  the PHP client. All three are first-party (published under the P2Flux org/namespace),
+  released 2026-09-07, and current with the 1.0.0 API. No Python or other-language
+  client exists yet; the docs direct those users to call the REST API directly.
+packages:
+  - name: '@p2flux/sdk'
+    language: JavaScript/TypeScript
+    registry: npm
+    official: true
+    url: https://www.npmjs.com/package/@p2flux/sdk
+    source: https://github.com/P2Flux/sdk-js
+    version: 0.7.2
+    published: '2026-09-07'
+    runtime: Node 18+, or any runtime with fetch
+    dependencies: none
+    note: >-
+      Server-side client covering all 21 public V1 merchant operations. Zero runtime
+      dependencies. charge() never throws on a payment outcome (returns NETWORK_ERROR /
+      RETRY_LATER instead of raising).
+  - name: p2flux/sdk-php
+    language: PHP
+    registry: packagist
+    official: true
+    url: https://packagist.org/packages/p2flux/sdk-php
+    source: https://github.com/P2Flux/sdk-php
+    version: 0.7.3
+    published: '2026-09-07'
+    runtime: PHP 8.1+
+    dependencies: none
+    note: >-
+      Server-side client with full parity to the JS SDK (same 21 operations). Pluggable
+      transport (default CurlTransport); the client contains no direct curl call, which
+      lets a WordPress plugin vendor it.
+  - name: p2flux/laravel
+    language: PHP
+    registry: packagist
+    official: true
+    url: https://packagist.org/packages/p2flux/laravel
+    source: https://github.com/P2Flux/laravel
+    version: 0.1.1
+    published: '2026-09-07'
+    runtime: Laravel 12 or 13, PHP 8.2+
+    dependencies: p2flux/sdk-php
+    note: >-
+      Framework integration, not a third SDK: wires the official PHP client into
+      Laravel's container via package discovery. Installs no routes, migrations,
+      models or scheduler.
+related:
+  - name: WooCommerce gateway
+    kind: plugin
+    official: true
+    source: https://github.com/P2Flux/woocommerce
+    note: >-
+      Official WooCommerce payment gateway (PHP) built on the PHP SDK; distributed via
+      the P2Flux GitHub org rather than a package registry. Captured as a component/
+      integration, not a language SDK.

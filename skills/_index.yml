@@ -1,0 +1,19 @@
+generated: '2026-09-15'
+method: generated
+source: >-
+  Generated from openapi/p2flux-api-openapi.json operations and the P2Flux docs. Every
+  step is grounded in a real operationId; no operations were invented.
+api: P2Flux API
+skills:
+  - name: p2flux-take-one-time-payment
+    file: p2flux-api-take-one-time-payment.md
+    operations: [createPayment, resolvePayment, verifyPayment, recoverPayment]
+    summary: Take a single USDC payment end to end and verify settlement server-side.
+  - name: p2flux-recurring-subscription
+    file: p2flux-api-recurring-subscription.md
+    operations: [createSubscription, resolveSubscription, finalizeSubscription, charge, recoverCharge, subscriptionStatus, prepareSubscriptionCancellation]
+    summary: Set up an EIP-712 recurring authorization, charge each period, and cancel on-chain.
+  - name: p2flux-refund-payment
+    file: p2flux-api-refund-payment.md
+    operations: [prepareRefund, resolveRefund, verifyRefund]
+    summary: Refund a settled payment and verify the refund on-chain (merchant enforces idempotency).

@@ -1,0 +1,40 @@
+overlay: 1.0.0
+info:
+  title: P2Flux API — API Evangelist enrichment overlay
+  version: 1.0.0
+extends: https://p2flux.com/openapi.json
+x-provenance:
+  generated: '2026-09-15'
+  method: generated
+  source: >-
+    API Evangelist enrichment. Captures cross-cutting semantics discovered from the docs
+    (auth model, idempotency, reversibility, rate limits) without mutating the original
+    contract.
+actions:
+  - target: $.info
+    description: Annotate the runtime semantics an agent needs before calling P2Flux.
+    update:
+      x-authentication: >-
+        No API key or Authorization header. Authorization is an in-body HMAC-signed
+        capability (p2f1./p2setup2./p2s2./p2cancel1./p2refund1.) plus the payer's EIP-712
+        wallet signature. Treat every capability as a bearer secret; keep it server-side.
+      x-idempotency: >-
+        No Idempotency-Key header. Writes are exactly-once by construction: a payment
+        settles once via the contract replay guard, a charge is allowed once per billing
+        period. Identical retries are safe.
+      x-reversibility: >-
+        One-time payments are reversible via refund (prepareRefund/verifyRefund);
+        subscriptions via cancellation/allowance revocation. No bounded refund window is
+        published.
+      x-rate-limits: >-
+        Per-IP limits (600/min global; 120/min on /v1/payments and /v1/subscriptions),
+        per-object charge limits, and per-wallet sponsored-tx limits. 429 with RATE_LIMITED
+        or CONCURRENCY_LIMIT, retry_after body field and Retry-After header.
+  - target: $.info
+    description: Record the on-chain settlement environment as agent context.
+    update:
+      x-settlement:
+        asset: USDC (ERC-20, 6 decimals)
+        production: { chain: Base Mainnet, chain_id: 8453, base_url: https://api.p2flux.com }
+        test: { chain: Base Sepolia, chain_id: 84532, base_url: https://api-test.p2flux.com }
+        custody: non-custodial (funds never held by P2Flux)

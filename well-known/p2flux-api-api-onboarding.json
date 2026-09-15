@@ -1,0 +1,89 @@
+{
+  "aod": "0.1",
+  "provider": {
+    "name": "P2Flux",
+    "url": "https://p2flux.com/",
+    "portalUrl": "https://p2flux.com/docs/",
+    "apisJsonUrl": "https://p2flux.com/.well-known/apis.json"
+  },
+  "maturity": "self-serve",
+  "account": {
+    "required": false,
+    "agentPolicy": "unspecified",
+    "prerequisites": [
+      "A wallet address on Base that you control, to receive USDC. Payments settle to it directly and P2Flux never holds the funds.",
+      "A server-side component that keeps subscription capabilities secret and verifies each payment before fulfilling an order."
+    ],
+    "termsOfService": {
+      "url": "https://p2flux.com/terms.html",
+      "acceptance": "implicit"
+    }
+  },
+  "verification": [],
+  "registration": {
+    "mechanisms": [
+      {
+        "type": "open",
+        "description": "Production on Base Mainnet. P2Flux has no merchant account, signup, approval queue or merchant KYC, and issues no credentials through a dashboard. Call the API directly.",
+        "baseUrl": "https://api.p2flux.com",
+        "docsUrls": [
+          "https://p2flux.com/docs/quickstart.html",
+          "https://p2flux.com/docs/api.html#auth"
+        ],
+        "auth": "none"
+      },
+      {
+        "type": "open",
+        "description": "Public test environment on Base Sepolia, using test USDC. It has the same endpoints as production and needs no credentials either.",
+        "baseUrl": "https://api-test.p2flux.com",
+        "docsUrls": [
+          "https://p2flux.com/docs/networks.html",
+          "https://p2flux.com/docs/api/"
+        ],
+        "auth": "none"
+      }
+    ]
+  },
+  "authentication": {
+    "methods": [
+      {
+        "id": "none",
+        "type": "none",
+        "bootstrap": "",
+        "notes": "v1 uses no API key, bearer token or Authorization header. Where a request acts on an existing payment, subscription or refund, it carries a narrowly scoped capability in the JSON body. The API issues each capability and signs it with an HMAC. A p2s2 subscription capability authorizes charges against a customer's wallet, so treat it as a bearer secret and keep it server-side."
+      }
+    ]
+  },
+  "credentials": [],
+  "scopes": {
+    "model": "resource-selection",
+    "resourceSelection": "one payment intent, subscription, cancellation or refund per signed capability",
+    "vocabularyUrl": "https://p2flux.com/docs/api.html#auth",
+    "notes": "There is no account-level scope. Each capability is minted by the API for one object and can only do what that object allows. For example, a subscription capability can only collect the amount the customer signed, once per billing period, to the recipient they signed for."
+  },
+  "flow": {
+    "steps": [
+      {
+        "id": "probe",
+        "description": "Shows that no credentials are needed: an unauthenticated liveness check against the test environment.",
+        "auth": "none",
+        "request": {
+          "method": "GET",
+          "url": "https://api-test.p2flux.com/health"
+        }
+      }
+    ],
+    "outputs": {
+      "ok": "{steps.probe.ok}"
+    }
+  },
+  "economics": {
+    "pricingUrl": "https://p2flux.com/#pricing",
+    "freeTier": "API access needs no plan or monthly subscription, and API calls are not billed. P2Flux charges a per-transaction fee, set in the smart contracts and taken inside each settled payment. Current figures are on the pricing page and at https://p2flux.com/docs/fees.html.",
+    "rateLimitsUrl": "https://p2flux.com/docs/api.html#limits"
+  },
+  "gaps": [
+    "Every one-time payment and every subscription setup needs the payer's own wallet signature. This is the security model, not an onboarding step, and nobody can automate it on the payer's behalf.",
+    "Pricing is published as HTML only. There is no machine-readable plans document yet."
+  ]
+}

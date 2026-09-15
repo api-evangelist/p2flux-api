@@ -1,0 +1,48 @@
+generated: '2026-09-15'
+method: searched
+source: https://p2flux.com/docs/networks.html and https://p2flux.com/openapi.json (servers[])
+api: P2Flux API
+summary: >-
+  P2Flux ships a full public test environment on Base Sepolia with the same endpoints
+  as production. There are no test API keys (the API uses no credentials in either
+  environment); the test/production distinction is the chain, the base URL and the
+  hosted checkout host. Capabilities minted in one environment are refused by the
+  other. Test value is faucet USDC with no monetary worth.
+environments:
+  - mode: production
+    base_url: https://api.p2flux.com
+    checkout_url: https://pay.p2flux.com
+    chain: Base Mainnet
+    chain_id: 8453
+    money: real USDC, irreversible settlement
+  - mode: test
+    base_url: https://api-test.p2flux.com
+    checkout_url: https://pay-test.p2flux.com
+    chain: Base Sepolia
+    chain_id: 84532
+    money: faucet USDC, no real value
+    note: >-
+      The interactive API explorer (https://p2flux.com/docs/api/) is restricted to this
+      test server by design.
+credentials_model: >-
+  No test-vs-live key prefixes exist: v1 issues no API keys. Environments are selected
+  by base URL. Signed capabilities are the bearer secret and are bound to one
+  environment's contracts; they do not cross between test and production.
+test_assets:
+  - symbol: USDC
+    network: Base Sepolia
+    decimals: 6
+    contract: '0x036CbD53842c5426634e7929541eC2318f3dCF7e'
+    faucet: >-
+      Docs state test USDC comes from a faucet but do not publish a specific faucet URL;
+      standard Base Sepolia / Circle testnet faucets apply.
+test_contracts:
+  P2FluxSplitter: '0x3120aa022437db5c6d0439ac7f7852ce8b38e70f'
+  P2FluxRecurring: '0x394c3fe285168f333ebf29e8f3585039328f2a73'
+  P2FluxSponsoredSplitter: '0x876f7b98e8c06291ec916a3223a92038b0a8774f'
+  P2FluxGasSponsor: '0x2dc51643040d7c396f1199a0664ac095d4b89ec5'
+liveness_probe:
+  method: GET
+  url: https://api-test.p2flux.com/health
+  auth: none
+  note: Unauthenticated liveness check; the api-onboarding descriptor uses it as the zero-credential probe step.

@@ -1,0 +1,32 @@
+generated: '2026-09-15'
+method: searched
+source: >-
+  https://p2flux.com/openapi.json, https://p2flux.com/status.html,
+  https://p2flux.com/docs/api.html, https://p2flux.com/#pricing
+api: P2Flux API
+summary: >-
+  P2Flux is at v1 (info.version 1.0.0), versioned in the URL path (/v1/...). No
+  operations are marked deprecated and no formal deprecation/sunset policy is published.
+  A live status page covers the API, hosted checkout and payment infrastructure. There
+  is no published SLA; contract fee constants are the closest thing to a stability
+  guarantee since they are set on-chain.
+versioning:
+  scheme: url-path
+  current: v1
+  info_version: 1.0.0
+  note: A single major version; no version negotiation headers documented.
+deprecation:
+  policy_published: false
+  deprecated_operations: []
+  sunset_header: false
+  note: >-
+    No RFC 8594 Deprecation/Sunset headers and no deprecation policy page found.
+status_page:
+  url: https://p2flux.com/status.html
+  covers: API, hosted checkout, payment infrastructure
+sla:
+  published: false
+stability:
+  note: >-
+    Fee constants live in the on-chain contracts (github.com/P2Flux/contracts) and are
+    readable/verifiable, which pins the economic terms independently of the hosted API.

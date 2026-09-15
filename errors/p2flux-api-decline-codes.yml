@@ -1,0 +1,84 @@
+generated: '2026-09-15'
+method: searched
+source: https://p2flux.com/docs/errors.html and the OpenAPI ErrorCode enum
+api: P2Flux API
+summary: >-
+  P2Flux is a payments API, but it has no card-network decline codes: settlement is an
+  on-chain USDC transfer, so "declines" are payment-failure conditions about balance,
+  allowance, signature, confirmation depth, gas and relayer capacity. This catalog is
+  the payment-outcome view (which failures mean the customer must act, which are safe to
+  retry, and which stop a subscription). It complements errors/p2flux-api-problem-types.yml.
+envelope_field: error
+action_field: action
+masked_to_buyer: >-
+  No codes are masked; P2Flux is server-to-server and every code is documented. The
+  customer-facing surface is the hosted checkout, which translates CUSTOMER_ACTION_REQUIRED
+  outcomes (insufficient balance/allowance, bad signature) into wallet prompts.
+decline_codes:
+  # Customer must act (top up, re-approve, re-sign)
+  - code: INSUFFICIENT_BALANCE
+    meaning: Payer's USDC balance is short of the amount.
+    action: CUSTOMER_ACTION_REQUIRED
+  - code: INSUFFICIENT_ALLOWANCE
+    meaning: The on-chain allowance was removed or never granted.
+    action: CUSTOMER_ACTION_REQUIRED
+  - code: INVALID_SIGNATURE
+    meaning: The EIP-712 signature fails verification.
+    action: CUSTOMER_ACTION_REQUIRED
+  - code: UNSUPPORTED_SIGNATURE_FORMAT
+    meaning: Smart-contract account not deployed yet.
+    action: CUSTOMER_ACTION_REQUIRED
+  - code: GAS_FEE_TOO_HIGH
+    meaning: Network fee exceeds the customer's signed reimbursement ceiling.
+    action: CUSTOMER_ACTION_REQUIRED
+  - code: INSUFFICIENT_PAYMENT_TOKEN_FOR_GAS
+    meaning: Not enough USDC to cover the sponsored network fee.
+    action: CUSTOMER_ACTION_REQUIRED
+  # Stop the subscription (permanent)
+  - code: PERMISSION_REVOKED
+    meaning: Authorization revoked on-chain or outside its window.
+    action: STOP_SUBSCRIPTION
+  - code: SUBSCRIPTION_EXPIRED
+    meaning: Past the authorization end date.
+    action: STOP_SUBSCRIPTION
+  # Wait — money may have moved / period not open
+  - code: PAYMENT_CONFIRMING
+    meaning: Transaction exists but not settled to required depth.
+    action: WAIT
+  - code: NOT_DUE
+    meaning: Billing period not yet open.
+    action: WAIT
+  - code: PAYMENT_ALREADY_PROCESSED
+    meaning: Already settled — treat as success.
+    action: SUCCESS
+  - code: ALREADY_CHARGED
+    meaning: This period was already collected — treat as success.
+    action: SUCCESS
+  # Safe to retry; nothing spent
+  - code: TRANSACTION_REVERTED
+    meaning: The on-chain transaction failed; no funds moved.
+    action: RETRY_LATER
+  - code: RATE_LIMITED
+    meaning: Rate or per-wallet limit hit; carries retry_after.
+    action: RETRY_LATER
+  - code: CONCURRENCY_LIMIT
+    meaning: Too many concurrent charges in flight.
+    action: RETRY_LATER
+  - code: GAS_TOO_HIGH
+    meaning: Gas rose beyond the authorization.
+    action: RETRY_LATER
+  - code: GAS_QUOTE_UNAVAILABLE
+    meaning: Gas pricing temporarily failed.
+    action: RETRY_LATER
+  - code: RELAYER_TX_COST_TOO_HIGH
+    meaning: Transaction cost exceeds the relayer's risk ceiling.
+    action: RETRY_LATER
+  - code: RELAYER_BUDGET_EXCEEDED
+    meaning: Relayer rolling spend budget exhausted.
+    action: RETRY_LATER
+  - code: RELAYER_NOT_READY
+    meaning: Relayer cannot safely sign right now.
+    action: RETRY_LATER
+  - code: RPC_BUSY
+    meaning: Chain RPC saturated.
+    action: RETRY_LATER

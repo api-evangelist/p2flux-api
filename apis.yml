@@ -5,6 +5,7 @@ description: >-
   authorized per-request via HMAC-signed capabilities plus the payer's EIP-712 wallet signature — no signup, no
   dashboard, no issued credentials, and no custody of funds.
 url: https://raw.githubusercontent.com/api-evangelist/p2flux-api/refs/heads/main/apis.yml
+image: https://p2flux.com/assets/apple-touch-icon.png
 created: '2026-09-15'
 modified: '2026-09-15'
 specificationVersion: '0.21'
@@ -25,6 +26,7 @@ apis:
       Non-custodial USDC payments REST API on Base. Covers one-time payments, verification, subscriptions,
       merchant-triggered charges, refunds, allowance restore/revoke, and gas sponsorship. Production runs on Base
       Mainnet (8453); an identical test environment runs on Base Sepolia (84532).
+    image: https://p2flux.com/assets/apple-touch-icon.png
     humanURL: https://p2flux.com/docs/api.html
     baseURL: https://api.p2flux.com
     tags:
@@ -45,11 +47,95 @@ apis:
         url: https://p2flux.com/docs/
       - type: LLMsTxt
         url: https://p2flux.com/llms.txt
+      - type: OpenAPI
+        url: openapi/p2flux-api-openapi.json
+      - type: APIReference
+        url: https://p2flux.com/docs/api.html
+      - type: Authentication
+        url: authentication/p2flux-api-authentication.yml
+      - type: Conventions
+        url: conventions/p2flux-api-conventions.yml
+      - type: ErrorCatalog
+        url: errors/p2flux-api-problem-types.yml
+      - type: DataModel
+        url: data-model/p2flux-api-data-model.yml
+      - type: Overlay
+        url: overlays/p2flux-api-openapi-overlay.yaml
 maintainers:
   - FN: P2Flux
     url: https://github.com/P2Flux
-generated:
+x-generated:
   by: apis.io/add
   model: claude-opus-4-8
   confidence: 97
   at: '2026-09-15T08:19:35.849Z'
+common:
+- type: DomainSecurity
+  url: security/p2flux-api-domain-security.yml
+- type: Website
+  url: https://p2flux.com/
+- type: DeveloperPortal
+  url: https://p2flux.com/docs/
+- type: Documentation
+  url: https://p2flux.com/docs/
+- type: GettingStarted
+  url: https://p2flux.com/docs/quickstart.html
+- type: APIReference
+  url: https://p2flux.com/docs/api.html
+- type: Pricing
+  url: https://p2flux.com/#pricing
+- type: StatusPage
+  url: https://p2flux.com/status.html
+- type: TermsOfService
+  url: https://p2flux.com/terms.html
+- type: PrivacyPolicy
+  url: https://p2flux.com/privacy.html
+- type: Support
+  url: https://p2flux.com/integration-enquiries.html
+- type: Integrations
+  url: https://p2flux.com/integrations.html
+- type: GitHubOrganization
+  url: https://github.com/P2Flux
+- type: LLMsTxt
+  url: https://p2flux.com/llms.txt
+- type: WellKnown
+  url: well-known/p2flux-api-well-known.yml
+- type: APIOnboarding
+  url: https://p2flux.com/.well-known/api-onboarding
+- type: Packages
+  url: packages/p2flux-api-packages.yml
+- type: SDKs
+  url: packages/p2flux-api-packages.yml
+- type: Components
+  url: components/p2flux-api-components.yml
+- type: Sandbox
+  url: sandbox/p2flux-api-sandbox.yml
+- type: RateLimits
+  url: rate-limits/p2flux-api-rate-limits.yml
+- type: Plans
+  url: plans/p2flux-api-plans-pricing.yml
+- type: Conventions
+  url: conventions/p2flux-api-conventions.yml
+- type: Idempotency
+  url: conventions/p2flux-api-conventions.yml
+- type: Authentication
+  url: authentication/p2flux-api-authentication.yml
+- type: ErrorCatalog
+  url: errors/p2flux-api-problem-types.yml
+- type: DeclineCodes
+  url: errors/p2flux-api-decline-codes.yml
+- type: Conformance
+  url: conformance/p2flux-api-conformance.yml
+- type: Lifecycle
+  url: lifecycle/p2flux-api-lifecycle.yml
+- type: MCPServer
+  url: mcp/p2flux-api-mcp.yml
+- type: DataModel
+  url: data-model/p2flux-api-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-09-15'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v3

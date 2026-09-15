@@ -1,0 +1,52 @@
+generated: '2026-09-15'
+method: searched
+source: https://p2flux.com/docs/api.html#auth and https://p2flux.com/.well-known/api-onboarding
+api: P2Flux API
+summary: >-
+  P2Flux v1 has no API authentication in the conventional sense: no API keys, no bearer
+  tokens, no Authorization header, no cookies and no credentialed CORS. The OpenAPI
+  declares no securitySchemes and an empty top-level security list. Authorization is
+  carried per-request by a signed capability in the JSON body, and — for setting up a
+  subscription or a one-time payment — by the payer's own EIP-712 wallet signature.
+model: capability + wallet-signature (no ambient authority)
+security_schemes: []
+mechanisms:
+  - id: signed-capability
+    type: in-body bearer secret
+    description: >-
+      Requests that act on an existing payment, subscription, cancellation or refund
+      carry an opaque capability token in the request body. P2Flux mints each token for
+      exactly one object and HMAC-signs it; the signature is what authorizes the call
+      and is verified on every request. Tokens are bound to an exact recipient, amount
+      and period, so a capability can only do what its object allows.
+    token_prefixes:
+      p2f1.: payment intent
+      p2setup2.: subscription setup token
+      p2s2.: subscription capability (authorizes merchant-triggered charges)
+      p2cancel1.: cancel token
+      p2refund1.: refund token
+    handling: >-
+      Treat every capability as a bearer secret: keep it server-side, encrypted at rest,
+      out of URLs, query strings and logs. A p2s2 subscription capability can collect the
+      signed amount once per billing period to the signed recipient.
+  - id: eip-712-payer-signature
+    type: wallet signature
+    description: >-
+      One-time payments and subscription setup require the payer's own EIP-712 typed
+      signature, produced by their wallet. resolveSubscription returns the exact EIP-712
+      payload the customer signs; finalizeSubscription exchanges that signature for the
+      p2s2 charge capability. This is the security model, not an onboarding step, and it
+      cannot be automated on the payer's behalf.
+    error_on_failure: INVALID_SIGNATURE (CUSTOMER_ACTION_REQUIRED)
+scopes:
+  model: resource-selection
+  description: >-
+    No account-level scopes. Each capability is scoped to a single object (one payment
+    intent, subscription, cancellation or refund) and cannot exceed what that object
+    authorizes.
+  vocabulary: https://p2flux.com/docs/api.html#auth
+notes:
+  - health is an unauthenticated liveness endpoint.
+  - Because there is no issued credential, there is nothing to rotate or revoke at the
+    account level; a subscription is stopped on-chain (allowance revocation) or by
+    letting the authorization window lapse.

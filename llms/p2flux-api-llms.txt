@@ -1,0 +1,37 @@
+# P2Flux
+
+> Non-custodial USDC payments on Base. One-time payments, recurring payments and refunds settle directly to a wallet the merchant controls. There is no P2Flux merchant account, no API key and no payout step.
+
+The P2Flux API has no signup and issues no credentials. The integration endpoints are POST with a JSON body. Requests that act on an existing payment, subscription or refund carry a capability that the API issues and signs with an HMAC. Keep subscription capabilities server-side. Production runs on Base Mainnet at https://api.p2flux.com, and a full test environment runs on Base Sepolia at https://api-test.p2flux.com.
+
+## Docs
+
+- [Introduction](https://p2flux.com/docs/): One-time and recurring USDC payments that settle directly to a wallet you control
+- [Quickstart](https://p2flux.com/docs/quickstart.html): Take one USDC payment end to end: create an intent, present the checkout, verify the transaction server-side, mark the order paid
+- [Networks & assets](https://p2flux.com/docs/networks.html): Base Mainnet in production and Base Sepolia for testing, with assets, contracts and the confirmation policy
+- [One-time payments](https://p2flux.com/docs/payments.html): Create a payment intent, present it and verify it on chain, including expiry and replay protection
+- [Recurring payments](https://p2flux.com/docs/subscriptions.html): EIP-712 authorization, merchant-triggered renewals, charge results, reconciliation and customer-owned cancellation
+- [Refunds](https://p2flux.com/docs/refunds.html): Lock the terms from the original settlement, send the transfer from the merchant wallet and verify it on chain
+- [API reference](https://p2flux.com/docs/api.html): Every endpoint, request field and response, plus rate limits and the authentication model
+- [API explorer](https://p2flux.com/docs/api/): Interactive reference generated from the OpenAPI contract, running against the Base Sepolia test environment
+- [Errors](https://p2flux.com/docs/errors.html): Every error code, its HTTP status, what it means and what your system should do
+- [SDKs](https://p2flux.com/docs/sdks.html): p2flux/sdk-php on Packagist, @p2flux/sdk on npm and the Laravel integration p2flux/laravel
+- [Fees & gas](https://p2flux.com/docs/fees.html): The fee for one-time and recurring payments, how it is split inside the payment transaction and who pays gas
+- [Troubleshooting](https://p2flux.com/docs/troubleshooting.html): What each failure means, whether funds moved and what to do next
+- [WooCommerce](https://p2flux.com/docs/woocommerce.html): The P2Flux gateway for WooCommerce, covering one-time orders, subscriptions, renewals, refunds and recovery
+
+## Machine-readable
+
+- [OpenAPI 3.1 specification](https://p2flux.com/openapi.json): The canonical API contract
+- [APIs.json](https://p2flux.com/.well-known/apis.json): API discovery index
+- [API onboarding descriptor](https://p2flux.com/.well-known/api-onboarding): What it takes to start using the API (no account and no credentials)
+
+## Company
+
+- [Pricing](https://p2flux.com/#pricing): Per-transaction pricing
+- [Status](https://p2flux.com/status.html): Live availability of the API, hosted checkout and payment infrastructure
+- [Integrations](https://p2flux.com/integrations.html): Official SDKs, the Laravel integration and the WooCommerce gateway
+- [Integration enquiries](https://p2flux.com/integration-enquiries.html): Contact for SaaS, marketplace, ecommerce and custom checkout integrations
+- [Terms of Service](https://p2flux.com/terms.html)
+- [Privacy Policy](https://p2flux.com/privacy.html)
+- [GitHub](https://github.com/P2Flux)

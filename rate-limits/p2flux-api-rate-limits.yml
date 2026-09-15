@@ -1,0 +1,68 @@
+generated: '2026-09-15'
+method: searched
+source: https://p2flux.com/docs/api.html#limits (and the OpenAPI 429 responses)
+api: P2Flux API
+summary: >-
+  Rate limits are enforced per client IP (default) with tighter per-object limits on
+  charge/recover paths and per-wallet limits on sponsored transactions. Exhaustion
+  returns HTTP 429 with a RATE_LIMITED or CONCURRENCY_LIMIT error code, a retry_after
+  field in the JSON body and a matching Retry-After response header.
+exhaustion:
+  status: 429
+  error_codes: [RATE_LIMITED, CONCURRENCY_LIMIT]
+  body_field: retry_after
+  headers:
+    - Retry-After
+limits:
+  - scope: per-IP (global)
+    limit: 600
+    window: 1 minute
+  - scope: per-IP
+    endpoint: /v1/payments
+    limit: 120
+    window: 1 minute
+  - scope: per-IP
+    endpoint: /v1/subscriptions
+    limit: 120
+    window: 1 minute
+  - scope: per-IP
+    endpoint: hosted checkout calls
+    limit: 180
+    window: 1 minute
+  - scope: per-IP
+    endpoint: /v1/subscriptions/status, /v1/payments/verify, /v1/refunds/verify, /v1/refunds/resolve
+    limit: 300
+    window: 1 minute
+  - scope: per-IP
+    endpoint: /v1/subscriptions/revoke/session, /v1/allowances/restore/session
+    limit: 60
+    window: 1 minute
+  - scope: per-IP
+    endpoint: /v1/payments/recover, /v1/charges/recover
+    limit: 30
+    window: 1 minute
+  - scope: per-object (payment/subscription)
+    endpoint: /v1/payments/recover, /v1/charges/recover
+    limit: 6
+    window: 1 minute
+  - scope: per-IP
+    endpoint: /v1/charges
+    limit: 300
+    window: 1 minute
+  - scope: per-subscription
+    endpoint: /v1/charges
+    limit: 6
+    window: 1 minute
+  - scope: concurrency
+    endpoint: /v1/charges
+    limit: 20
+    window: simultaneous in-flight
+    note: Enforced as CONCURRENCY_LIMIT (429) rather than a rate window.
+  - scope: per-buyer-wallet
+    endpoint: sponsored transactions (/v1/payments/sponsor)
+    limit: 10
+    window: rolling 1 hour
+  - scope: per-buyer-wallet
+    endpoint: sponsored transactions (/v1/payments/sponsor)
+    limit: 20
+    window: rolling 1 day

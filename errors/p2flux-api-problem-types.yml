@@ -1,0 +1,118 @@
+generated: '2026-09-15'
+method: searched
+source: https://p2flux.com/docs/errors.html and the OpenAPI Error/ErrorCode schemas
+api: P2Flux API
+summary: >-
+  P2Flux returns a uniform error envelope { error, action } (not RFC 9457 problem+json).
+  `error` is a stable machine code from the ErrorCode enum; `action` is a MerchantAction
+  telling the integration what to do, so callers never hard-code that mapping. Extra keys
+  carry code-specific detail (retry_after, confirmations, as_of_block). One deliberate
+  exception: /v1/payments/verify returns HTTP 200 with { valid: false, code } for every
+  failure outcome rather than a non-2xx status.
+format: custom-envelope
+problem_json: false
+envelope:
+  fields:
+    error: ErrorCode enum value (required)
+    action: MerchantAction enum value
+    retry_after: seconds (rate-limit / capacity codes; mirrors the Retry-After header)
+actions:
+  SUCCESS: Done, nothing owed / already settled — proceed.
+  WAIT: Money may already have moved; ask again about the SAME transaction, never start another.
+  RETRY_LATER: Nothing happened; the identical call is safe to repeat on your own schedule.
+  CUSTOMER_ACTION_REQUIRED: The customer must top up, re-approve or re-sign.
+  STOP_SUBSCRIPTION: Permanent; discontinue billing.
+  INVALID_REQUEST: Will always fail; do not retry.
+problem_types:
+  - code: INVALID_INTENT
+    http: 400
+    action: INVALID_REQUEST
+    meaning: Malformed, forged, or deployed elsewhere.
+  - code: INTENT_EXPIRED
+    http: 400
+    action: INVALID_REQUEST
+    meaning: Past expiry; cannot start payment.
+  - code: AMOUNT_OUT_OF_BOUNDS
+    http: 400
+    action: INVALID_REQUEST
+    meaning: Below minimum or above ceiling.
+  - code: TERMS_MISMATCH
+    http: 400
+    action: INVALID_REQUEST
+    meaning: Recipient/amount/fee mismatch.
+  - code: WRONG_TOKEN
+    http: 400
+    action: INVALID_REQUEST
+    meaning: Expected USDC movement absent.
+  - code: PAYMENT_CONFIRMING
+    http: 409 or 200
+    action: WAIT
+    meaning: Not provable yet; the transaction exists but has not settled to depth.
+  - code: PAYMENT_ALREADY_PROCESSED
+    http: 409
+    action: SUCCESS
+    meaning: Already settled.
+  - code: TRANSACTION_REVERTED
+    http: 400
+    action: RETRY_LATER
+    meaning: Failed on-chain; no movement.
+  - code: INVALID_SIGNATURE
+    http: 400
+    action: CUSTOMER_ACTION_REQUIRED
+    meaning: EIP-712 signature fails verification.
+  - code: NOT_DUE
+    http: 409
+    action: WAIT
+    meaning: Billing period not yet open.
+  - code: ALREADY_CHARGED
+    http: 409
+    action: SUCCESS
+    meaning: Period already collected.
+  - code: PERMISSION_REVOKED
+    http: 400
+    action: STOP_SUBSCRIPTION
+    meaning: Revoked on-chain or outside window.
+  - code: SUBSCRIPTION_EXPIRED
+    http: 409
+    action: STOP_SUBSCRIPTION
+    meaning: Past authorization end.
+  - code: INSUFFICIENT_BALANCE
+    http: 400
+    action: CUSTOMER_ACTION_REQUIRED
+    meaning: Payer USDC balance short.
+  - code: INSUFFICIENT_ALLOWANCE
+    http: 400
+    action: CUSTOMER_ACTION_REQUIRED
+    meaning: Allowance removed or not granted.
+  - code: RATE_LIMITED
+    http: 429
+    action: RETRY_LATER
+    meaning: Too many requests, or a per-wallet limit hit. Carries retry_after.
+  - code: CONCURRENCY_LIMIT
+    http: 429
+    action: RETRY_LATER
+    meaning: Too many concurrent charges in flight.
+  - code: RPC_BUSY
+    http: 503
+    action: RETRY_LATER
+    meaning: Service saturated.
+  - code: RPC_ERROR
+    http: 502
+    action: RETRY_LATER
+    meaning: Chain read failed.
+  - code: RELAYER_ERROR
+    http: 502
+    action: RETRY_LATER
+    meaning: Transaction submission failed.
+  - code: INTERNAL_ERROR
+    http: 500
+    action: RETRY_LATER
+    meaning: Unexpected P2Flux failure.
+  - code: INVALID_REQUEST
+    http: 400
+    action: INVALID_REQUEST
+    meaning: Schema validation failed or body too large.
+note: >-
+  The full ErrorCode enum (60+ codes) is in the OpenAPI contract and enumerated with
+  remediation in errors/p2flux-api-decline-codes.yml. This file captures the envelope,
+  the action vocabulary and the representative HTTP-status mapping.

@@ -1,0 +1,162 @@
+{
+  "aid": "p2flux.com:p2flux",
+  "name": "P2Flux",
+  "description": "Non-custodial USDC payments on Base: one-time payments, recurring payments and refunds that settle directly to a wallet the merchant controls. No P2Flux merchant account, no API key and no payout step.",
+  "image": "https://p2flux.com/assets/apple-touch-icon.png",
+  "url": "https://p2flux.com/.well-known/apis.json",
+  "type": "Index",
+  "kind": "company",
+  "position": "Producing",
+  "visibility": "Public",
+  "created": "2026-09-15",
+  "modified": "2026-09-15",
+  "specificationVersion": "0.23",
+  "tags": [
+    "Payments",
+    "Payment API",
+    "Cryptocurrency",
+    "Stablecoins",
+    "USDC",
+    "Base",
+    "Recurring Payments",
+    "Subscriptions",
+    "Refunds",
+    "Non-Custodial"
+  ],
+  "apis": [
+    {
+      "aid": "p2flux.com:p2flux-api",
+      "name": "P2Flux API",
+      "description": "REST API for one-time USDC payment intents and on-chain verification, recurring payment setup and merchant-triggered charges, and refunds on Base. Payments are secured by the payer's signature and the smart contracts, not by API credentials.",
+      "image": "https://p2flux.com/assets/apple-touch-icon.png",
+      "humanURL": "https://p2flux.com/docs/",
+      "baseURL": "https://api.p2flux.com",
+      "version": "1.0.0",
+      "tags": [
+        "Payments",
+        "Payment API",
+        "Cryptocurrency",
+        "Stablecoins",
+        "USDC",
+        "Base",
+        "Recurring Payments",
+        "Subscriptions",
+        "Refunds",
+        "Non-Custodial"
+      ],
+      "properties": [
+        {
+          "type": "OpenAPI",
+          "name": "OpenAPI 3.1 contract",
+          "url": "https://p2flux.com/openapi.json",
+          "mediaType": "application/json"
+        },
+        {
+          "type": "Documentation",
+          "url": "https://p2flux.com/docs/"
+        },
+        {
+          "type": "GettingStarted",
+          "name": "Quickstart",
+          "url": "https://p2flux.com/docs/quickstart.html"
+        },
+        {
+          "type": "APIReference",
+          "url": "https://p2flux.com/docs/api.html"
+        },
+        {
+          "type": "Playground",
+          "name": "API explorer",
+          "description": "Interactive reference generated from openapi.json. Requests go to the Base Sepolia test environment.",
+          "url": "https://p2flux.com/docs/api/"
+        },
+        {
+          "type": "Authentication",
+          "description": "No API key or Authorization header in v1. Requests that act on an existing payment, subscription or refund carry an HMAC-signed capability in the JSON body.",
+          "url": "https://p2flux.com/docs/api.html#auth"
+        },
+        {
+          "type": "Sandbox",
+          "name": "Base Sepolia test environment",
+          "description": "A full test environment at https://api-test.p2flux.com, using test USDC on Base Sepolia.",
+          "url": "https://p2flux.com/docs/networks.html"
+        },
+        {
+          "type": "SDKs",
+          "url": "https://p2flux.com/docs/sdks.html"
+        },
+        {
+          "type": "ErrorCodes",
+          "url": "https://p2flux.com/docs/errors.html"
+        },
+        {
+          "type": "RateLimits",
+          "url": "https://p2flux.com/docs/api.html#limits"
+        },
+        {
+          "type": "Pricing",
+          "name": "Fees & gas",
+          "url": "https://p2flux.com/docs/fees.html"
+        }
+      ],
+      "contact": [
+        {
+          "FN": "P2Flux",
+          "url": "https://p2flux.com/integration-enquiries.html"
+        }
+      ]
+    }
+  ],
+  "common": [
+    {
+      "type": "Website",
+      "url": "https://p2flux.com/"
+    },
+    {
+      "type": "APIOnboarding",
+      "url": "https://p2flux.com/.well-known/api-onboarding",
+      "mediaType": "application/json"
+    },
+    {
+      "type": "Pricing",
+      "url": "https://p2flux.com/#pricing"
+    },
+    {
+      "type": "StatusPage",
+      "url": "https://p2flux.com/status.html"
+    },
+    {
+      "type": "TermsOfService",
+      "url": "https://p2flux.com/terms.html"
+    },
+    {
+      "type": "PrivacyPolicy",
+      "url": "https://p2flux.com/privacy.html"
+    },
+    {
+      "type": "Support",
+      "name": "Integration enquiries",
+      "url": "https://p2flux.com/integration-enquiries.html"
+    },
+    {
+      "type": "Integrations",
+      "url": "https://p2flux.com/integrations.html"
+    },
+    {
+      "type": "GitHubOrganization",
+      "url": "https://github.com/P2Flux"
+    },
+    {
+      "type": "LLMsTxt",
+      "url": "https://p2flux.com/llms.txt",
+      "mediaType": "text/plain"
+    }
+  ],
+  "maintainers": [
+    {
+      "FN": "P2Flux",
+      "url": "https://p2flux.com/",
+      "X-github": "P2Flux"
+    }
+  ]
+}

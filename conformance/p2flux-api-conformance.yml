@@ -1,0 +1,46 @@
+generated: '2026-09-15'
+method: derived
+source: >-
+  Derived from the OpenAPI contract (schemas Signature, Token, Amount, Capabilities) and
+  https://p2flux.com/docs/api.html; cross-checked against docs prose.
+api: P2Flux API
+summary: >-
+  P2Flux asserts no compliance certifications (no SOC 2 / ISO / PCI — it is non-custodial
+  and never holds funds) and does not use RFC 9457. Its domain-standard signature is the
+  Ethereum/EVM stack it settles on: EIP-712 typed-data signatures for payer authorization
+  and ERC-20 (USDC) transfers on Base. These are the market standards a crypto-payments
+  integrator already speaks.
+conformance:
+  - id: eip-712
+    name: EIP-712 Typed Structured Data Signing
+    conforms: true
+    evidence: >-
+      resolveSubscription returns "the exact EIP-712 payload the customer signs"; the
+      Signature schema and finalizeSubscription exchange an EIP-712 signature for the
+      subscription capability. Documented at https://p2flux.com/docs/api.html#auth.
+    domain_standard: true
+  - id: erc-20
+    name: ERC-20 token standard (USDC)
+    conforms: true
+    evidence: >-
+      Settlement moves USDC (6-decimal ERC-20) buyer-wallet to recipient-wallet; the
+      Token/Amount schemas and Capabilities.tokens[] describe ERC-20 token addresses,
+      symbols and decimals. Test USDC contract 0x036CbD53842c5426634e7929541eC2318f3dCF7e.
+    domain_standard: true
+  - id: non-custodial
+    name: Non-custodial settlement
+    conforms: true
+    evidence: >-
+      P2Flux never holds funds, balances or accounts; money moves directly between wallets
+      with the fee split in the same transaction (openapi info.description; api-onboarding
+      account.required=false).
+  - id: rfc9457
+    name: RFC 9457 Problem Details
+    conforms: false
+    evidence: >-
+      Errors use a custom { error, action } envelope, not application/problem+json. See
+      errors/p2flux-api-problem-types.yml.
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: false
+    evidence: No OAuth; the API issues no credentials and declares no securitySchemes.

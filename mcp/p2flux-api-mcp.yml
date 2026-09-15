@@ -1,0 +1,83 @@
+generated: '2026-09-15'
+method: derived
+source: >-
+  Derived from openapi/p2flux-api-openapi.json operations. No hosted or stdio MCP server
+  is published: POST tools/list to https://api.p2flux.com/mcp, https://p2flux.com/mcp and
+  https://api.p2flux.com/v1/mcp all returned 404, and no MCP server is referenced in the
+  llms.txt, apis.json or api-onboarding descriptor.
+api: P2Flux API
+summary: >-
+  P2Flux ships no MCP server. This is a DERIVED candidate tool list mapping the public
+  REST operations to prospective MCP tools, provided as a starting point only. Nobody
+  serves these as MCP tools today.
+deployment:
+  mode: none
+  endpoint: ''
+  install: ''
+  package: ''
+  auth: none
+  verified: derived
+candidate_tools:
+  - tool: create_payment
+    rest: [createPayment]
+    description: Create a signed one-time USDC payment intent plus the checkout pay block.
+  - tool: verify_payment
+    rest: [verifyPayment]
+    description: Verify a settlement on-chain and return a typed verdict plus receipt.
+  - tool: resolve_payment
+    rest: [resolvePayment]
+    description: Read back authoritative display terms for a payment intent.
+  - tool: recover_payment
+    rest: [recoverPayment]
+    description: Find a settled payment whose transaction hash was lost.
+  - tool: sponsor_payment
+    rest: [sponsorPayment]
+    description: Settle a one-time payment the buyer funded with a signature (gas in USDC).
+  - tool: create_subscription
+    rest: [createSubscription]
+    description: Create subscription terms and the signed setup token.
+  - tool: resolve_subscription
+    rest: [resolveSubscription]
+    description: Return terms plus the exact EIP-712 payload the customer signs.
+  - tool: finalize_subscription
+    rest: [finalizeSubscription]
+    description: Exchange the customer's signature for the p2s2 charge capability.
+  - tool: charge
+    rest: [charge]
+    description: Attempt this period's recurring payment (safe to retry).
+  - tool: recover_charge
+    rest: [recoverCharge]
+    description: Find the transaction that charged one exact billing period.
+  - tool: subscription_status
+    rest: [subscriptionStatus]
+    description: Read current subscription state from the chain.
+  - tool: create_cancellation_session
+    rest: [createCancellationSession]
+    description: Mint a browser-safe cancel token without exposing the capability.
+  - tool: prepare_subscription_cancellation
+    rest: [prepareSubscriptionCancellation]
+    description: Calldata the customer's wallet sends to cancel one subscription.
+  - tool: prepare_allowance_revocation
+    rest: [prepareAllowanceRevocation]
+    description: Calldata for approve(contract, 0) — the customer's global stop.
+  - tool: create_allowance_restore_session
+    rest: [createAllowanceRestoreSession]
+    description: Start a p2approve1 session to restore an allowance.
+  - tool: resolve_allowance_restore
+    rest: [resolveAllowanceRestore]
+    description: Report what an allowance-restore session authorizes.
+  - tool: submit_allowance_restore
+    rest: [submitAllowanceRestore]
+    description: Carry allowance-restore signatures onto the chain.
+  - tool: capabilities
+    rest: [capabilities, capabilitiesPost]
+    description: Which networks, tokens and operations this deployment supports.
+  - tool: prepare_refund
+    rest: [prepareRefund]
+    description: Lock the terms of a refund from the original settlement.
+  - tool: resolve_refund
+    rest: [resolveRefund]
+    description: Report what a refund token authorizes.
+  - tool: verify_refund
+    rest: [verifyRefund]
+    description: Confirm a refund happened and is settled on-chain.

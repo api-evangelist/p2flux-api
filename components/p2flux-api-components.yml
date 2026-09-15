@@ -1,0 +1,31 @@
+generated: '2026-09-15'
+method: searched
+source: >-
+  https://p2flux.com/docs/networks.html, https://p2flux.com/docs/sdks.html,
+  https://p2flux.com/integrations.html and the P2Flux GitHub org.
+api: P2Flux API
+summary: >-
+  P2Flux's buyer-facing surface is a hosted checkout (a P2Flux-served payment page the
+  buyer's wallet interacts with), not an embeddable component library. The only prebuilt
+  drop-in is the official WooCommerce payment gateway. There is no JS web-component or
+  element library — the SDKs are server-side.
+components:
+  - family: Hosted checkout
+    kind: hosted-surface
+    surfaces:
+      - name: Production checkout
+        url: https://pay.p2flux.com
+      - name: Test checkout
+        url: https://pay-test.p2flux.com
+    note: >-
+      The buyer-side wallet experience. The server creates a payment intent and hands off
+      to the hosted checkout; the browser only opens it and reports back what it saw —
+      that report is a claim, and the merchant server's verification is what marks an
+      order paid.
+  - family: WooCommerce gateway
+    kind: platform-plugin
+    source: https://github.com/P2Flux/woocommerce
+    docs: https://p2flux.com/docs/woocommerce.html
+    note: >-
+      Official WordPress/WooCommerce payment gateway covering one-time orders,
+      subscriptions, renewals, refunds and recovery. Built on the PHP SDK.

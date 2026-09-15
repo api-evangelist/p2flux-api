@@ -1,0 +1,35 @@
+generated: '2026-09-15'
+method: searched
+source: https://p2flux.com/docs/fees.html and https://p2flux.com/#pricing
+api: P2Flux API
+summary: >-
+  P2Flux has no subscription plans or tiers for API access: there is no signup, no
+  monthly fee and API calls are not billed. Revenue is a per-transaction fee taken
+  inside each settled payment, set as constants in the on-chain contracts. This is a
+  fee schedule, not a plan catalog.
+plan_count: 0
+billing_model: per-transaction fee, taken in-transaction (no account, no invoicing)
+fee_source: >-
+  Fee constants are readable on chain in https://github.com/P2Flux/contracts; the
+  hosted-API figures below are published at https://p2flux.com/docs/fees.html.
+fees:
+  - type: one-time payment
+    fee: 1% of the amount
+    minimum: 0.01 USDC (hosted API rule, not a contract rule)
+    paid_by: deducted from amount (recipient receives amount minus fee)
+    example: On 100 USDC the buyer pays 100, recipient receives 99, P2Flux takes 1.
+  - type: recurring / subscription charge
+    fee: 2% + 0.10 USDC per renewal
+    paid_by: merchant-funded (deducted from the charge)
+    minimum_charge: must exceed the combined merchant-funded fees (~0.10 USDC)
+    gas_reimbursement: added to the charge amount, variable with network conditions
+    gas_cap: 0.05 USDC per renewal (hard contract limit)
+  - type: gas sponsorship (pay network fee in USDC)
+    fee: quoted network fee (buyer-paid) + 0.10 USDC fixed network fee (merchant-funded)
+    applies_to: one-time payments via gas_payment_mode payment_token
+    note: >-
+      Blockchain gas itself is paid in ETH by the payer and is separate from all P2Flux
+      fees, unless the buyer opts into the sponsored path.
+notes:
+  - No machine-readable plans/pricing document is published; pricing is HTML-only. The
+    api-onboarding descriptor itself lists this as a known gap.
