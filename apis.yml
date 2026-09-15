@@ -1,0 +1,55 @@
+name: P2Flux API
+description: >-
+  Non-custodial USDC payments API on the Base blockchain. Provides REST endpoints for one-time USDC payment intents with
+  on-chain verification, recurring/subscription payments with merchant-triggered charges, and refunds. Payments are
+  authorized per-request via HMAC-signed capabilities plus the payer's EIP-712 wallet signature — no signup, no
+  dashboard, no issued credentials, and no custody of funds.
+url: https://raw.githubusercontent.com/api-evangelist/p2flux-api/refs/heads/main/apis.yml
+created: '2026-09-15'
+modified: '2026-09-15'
+specificationVersion: '0.21'
+tags:
+  - Payments
+  - Payment API
+  - Cryptocurrency
+  - Stablecoins
+  - USDC
+  - Base
+  - Recurring Payments
+  - Subscriptions
+  - Refunds
+  - Non-Custodial
+apis:
+  - name: P2Flux API
+    description: >-
+      Non-custodial USDC payments REST API on Base. Covers one-time payments, verification, subscriptions,
+      merchant-triggered charges, refunds, allowance restore/revoke, and gas sponsorship. Production runs on Base
+      Mainnet (8453); an identical test environment runs on Base Sepolia (84532).
+    humanURL: https://p2flux.com/docs/api.html
+    baseURL: https://api.p2flux.com
+    tags:
+      - Payments
+      - Payment API
+      - Cryptocurrency
+      - Stablecoins
+      - USDC
+      - Base
+      - Recurring Payments
+      - Subscriptions
+      - Refunds
+      - Non-Custodial
+    properties:
+      - type: OpenAPI
+        url: https://p2flux.com/openapi.json
+      - type: Documentation
+        url: https://p2flux.com/docs/
+      - type: LLMsTxt
+        url: https://p2flux.com/llms.txt
+maintainers:
+  - FN: P2Flux
+    url: https://github.com/P2Flux
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 97
+  at: '2026-09-15T08:19:35.849Z'
