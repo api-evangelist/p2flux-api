@@ -17,50 +17,165 @@ tags:
   - USDC
   - Base
   - Recurring Payments
+  - Subscription
+  - Refunds
+  - Non-Custodial
+tags_raw:
+  - Payments
+  - Payment API
+  - Cryptocurrency
+  - Stablecoins
+  - USDC
+  - Base
+  - Recurring Payments
   - Subscriptions
   - Refunds
   - Non-Custodial
 apis:
-  - name: P2Flux API
-    description: >-
-      Non-custodial USDC payments REST API on Base. Covers one-time payments, verification, subscriptions,
-      merchant-triggered charges, refunds, allowance restore/revoke, and gas sponsorship. Production runs on Base
-      Mainnet (8453); an identical test environment runs on Base Sepolia (84532).
-    image: https://p2flux.com/assets/apple-touch-icon.png
-    humanURL: https://p2flux.com/docs/api.html
-    baseURL: https://api.p2flux.com
-    tags:
-      - Payments
-      - Payment API
-      - Cryptocurrency
-      - Stablecoins
-      - USDC
-      - Base
-      - Recurring Payments
-      - Subscriptions
-      - Refunds
-      - Non-Custodial
-    properties:
-      - type: OpenAPI
-        url: https://p2flux.com/openapi.json
-      - type: Documentation
-        url: https://p2flux.com/docs/
-      - type: LLMsTxt
-        url: https://p2flux.com/llms.txt
-      - type: OpenAPI
-        url: openapi/p2flux-api-openapi.json
-      - type: APIReference
-        url: https://p2flux.com/docs/api.html
-      - type: Authentication
-        url: authentication/p2flux-api-authentication.yml
-      - type: Conventions
-        url: conventions/p2flux-api-conventions.yml
-      - type: ErrorCatalog
-        url: errors/p2flux-api-problem-types.yml
-      - type: DataModel
-        url: data-model/p2flux-api-data-model.yml
-      - type: Overlay
-        url: overlays/p2flux-api-openapi-overlay.yaml
+- aid: p2flux-api:p2flux-api-cancellation-api
+  name: P2Flux API Cancellation API
+  description: Unsigned calldata for the customer's own wallet to send.
+  humanURL: https://p2flux.com/docs/api.html
+  baseURL: https://api.p2flux.com
+  tags:
+  - Cancellation
+  properties:
+  - type: OpenAPI
+    url: openapi/p2flux-api-cancellation-api-openapi.yml
+  - type: Documentation
+    url: https://p2flux.com/docs/
+  - type: LLMsTxt
+    url: https://p2flux.com/llms.txt
+  - type: APIReference
+    url: https://p2flux.com/docs/api.html
+  - type: Authentication
+    url: authentication/p2flux-api-authentication.yml
+  - type: Conventions
+    url: conventions/p2flux-api-conventions.yml
+  - type: ErrorCatalog
+    url: errors/p2flux-api-problem-types.yml
+  - type: DataModel
+    url: data-model/p2flux-api-data-model.yml
+- aid: p2flux-api:p2flux-api-one-time-payments-api
+  name: P2Flux API One-time payments API
+  description: A single payment to a single recipient.
+  humanURL: https://p2flux.com/docs/api.html
+  baseURL: https://api.p2flux.com
+  tags:
+  - One-time payments
+  properties:
+  - type: OpenAPI
+    url: openapi/p2flux-api-one-time-payments-api-openapi.yml
+  - type: Documentation
+    url: https://p2flux.com/docs/
+  - type: LLMsTxt
+    url: https://p2flux.com/llms.txt
+  - type: APIReference
+    url: https://p2flux.com/docs/api.html
+  - type: Authentication
+    url: authentication/p2flux-api-authentication.yml
+  - type: Conventions
+    url: conventions/p2flux-api-conventions.yml
+  - type: ErrorCatalog
+    url: errors/p2flux-api-problem-types.yml
+  - type: DataModel
+    url: data-model/p2flux-api-data-model.yml
+- aid: p2flux-api:p2flux-api-recurring-payments-api
+  name: P2Flux API Recurring payments API
+  description: Signed once by the customer, charged by your renewal job.
+  humanURL: https://p2flux.com/docs/api.html
+  baseURL: https://api.p2flux.com
+  tags:
+  - Recurring payments
+  properties:
+  - type: OpenAPI
+    url: openapi/p2flux-api-recurring-payments-api-openapi.yml
+  - type: Documentation
+    url: https://p2flux.com/docs/
+  - type: LLMsTxt
+    url: https://p2flux.com/llms.txt
+  - type: APIReference
+    url: https://p2flux.com/docs/api.html
+  - type: Authentication
+    url: authentication/p2flux-api-authentication.yml
+  - type: Conventions
+    url: conventions/p2flux-api-conventions.yml
+  - type: ErrorCatalog
+    url: errors/p2flux-api-problem-types.yml
+  - type: DataModel
+    url: data-model/p2flux-api-data-model.yml
+- aid: p2flux-api:p2flux-api-refunds-api
+  name: P2Flux API Refunds API
+  description: A transfer from the merchant's own wallet back to the wallet that paid.
+  humanURL: https://p2flux.com/docs/api.html
+  baseURL: https://api.p2flux.com
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/p2flux-api-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://p2flux.com/docs/
+  - type: LLMsTxt
+    url: https://p2flux.com/llms.txt
+  - type: APIReference
+    url: https://p2flux.com/docs/api.html
+  - type: Authentication
+    url: authentication/p2flux-api-authentication.yml
+  - type: Conventions
+    url: conventions/p2flux-api-conventions.yml
+  - type: ErrorCatalog
+    url: errors/p2flux-api-problem-types.yml
+  - type: DataModel
+    url: data-model/p2flux-api-data-model.yml
+- aid: p2flux-api:p2flux-api-service-api
+  name: P2Flux API Service API
+  description: Liveness.
+  humanURL: https://p2flux.com/docs/api.html
+  baseURL: https://api.p2flux.com
+  tags:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/p2flux-api-service-api-openapi.yml
+  - type: Documentation
+    url: https://p2flux.com/docs/
+  - type: LLMsTxt
+    url: https://p2flux.com/llms.txt
+  - type: APIReference
+    url: https://p2flux.com/docs/api.html
+  - type: Authentication
+    url: authentication/p2flux-api-authentication.yml
+  - type: Conventions
+    url: conventions/p2flux-api-conventions.yml
+  - type: ErrorCatalog
+    url: errors/p2flux-api-problem-types.yml
+  - type: DataModel
+    url: data-model/p2flux-api-data-model.yml
+- aid: p2flux-api:p2flux-api-subscriptions-api
+  name: P2Flux API Subscriptions API
+  description: The Subscriptions API from P2Flux API — 1 operation(s) for subscriptions.
+  humanURL: https://p2flux.com/docs/api.html
+  baseURL: https://api.p2flux.com
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/p2flux-api-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://p2flux.com/docs/
+  - type: LLMsTxt
+    url: https://p2flux.com/llms.txt
+  - type: APIReference
+    url: https://p2flux.com/docs/api.html
+  - type: Authentication
+    url: authentication/p2flux-api-authentication.yml
+  - type: Conventions
+    url: conventions/p2flux-api-conventions.yml
+  - type: ErrorCatalog
+    url: errors/p2flux-api-problem-types.yml
+  - type: DataModel
+    url: data-model/p2flux-api-data-model.yml
 maintainers:
   - FN: P2Flux
     url: https://github.com/P2Flux
@@ -70,6 +185,8 @@ x-generated:
   confidence: 97
   at: '2026-09-15T08:19:35.849Z'
 common:
+- type: Overlay
+  url: overlays/p2flux-api-openapi-overlay.yaml
 - type: DomainSecurity
   url: security/p2flux-api-domain-security.yml
 - type: Website
