@@ -62,6 +62,8 @@ apis:
   humanURL: https://p2flux.com/docs/api.html
   baseURL: https://api.p2flux.com
   tags:
+  - One-Time Payments
+  tags_raw:
   - One-time payments
   properties:
   - type: OpenAPI
@@ -86,6 +88,8 @@ apis:
   humanURL: https://p2flux.com/docs/api.html
   baseURL: https://api.p2flux.com
   tags:
+  - Recurring Payments
+  tags_raw:
   - Recurring payments
   properties:
   - type: OpenAPI
@@ -134,6 +138,8 @@ apis:
   humanURL: https://p2flux.com/docs/api.html
   baseURL: https://api.p2flux.com
   tags:
+  - Services
+  tags_raw:
   - Service
   properties:
   - type: OpenAPI
@@ -158,6 +164,8 @@ apis:
   humanURL: https://p2flux.com/docs/api.html
   baseURL: https://api.p2flux.com
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
