@@ -1,0 +1,31 @@
+{
+  "provider": "p2flux-api",
+  "sources": [
+    "_original/p2flux-api-openapi.json"
+  ],
+  "outputs": [
+    "p2flux-api-cancellation-api-openapi.yml",
+    "p2flux-api-one-time-payments-api-openapi.yml",
+    "p2flux-api-recurring-payments-api-openapi.yml",
+    "p2flux-api-refunds-api-openapi.yml",
+    "p2flux-api-service-api-openapi.yml",
+    "p2flux-api-subscriptions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "p2flux-api-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "p2flux-api-openapi.json: declared missing tag: Subscriptions",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "p2flux-api-cancellation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "p2flux-api-one-time-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "p2flux-api-recurring-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "p2flux-api-refunds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "p2flux-api-service-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "p2flux-api-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
