@@ -256,20 +256,35 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      description: The uniform error envelope. `error` is the P2Flux code; `action` is what a merchant system should do about it, so integrations never hard-code that table themselves. Extra keys carry detail specific to the code (for example `retry_after`, `confirmations`, `as_of_block`).
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ErrorCode'
-        action:
-          $ref: '#/components/schemas/MerchantAction'
-      additionalProperties: true
+    MerchantAction:
+      type: string
+      enum:
+      - SUCCESS
+      - WAIT
+      - RETRY_LATER
+      - CUSTOMER_ACTION_REQUIRED
+      - STOP_SUBSCRIPTION
+      - INVALID_REQUEST
+      description: 'What to do about a result.
+
+
+        - `SUCCESS` - done, nothing owed.
+
+        - `WAIT` - **the money may already have moved.** The transaction exists and has not settled to the required depth. Ask again about the SAME transaction; never start another one. This is not a failure, and showing the customer an error here tells someone who has paid that they have not.
+
+        - `RETRY_LATER` - nothing happened; the identical call is safe to repeat on your own schedule.
+
+        - `CUSTOMER_ACTION_REQUIRED` - the customer must top up or re-approve.
+
+        - `STOP_SUBSCRIPTION` - terminal; stop charging this subscription.
+
+        - `INVALID_REQUEST` - permanent. Retrying returns the same answer forever; fix the request.'
+    AmountUnits:
+      type: string
+      pattern: ^\d{1,20}$
+      description: An integer count of micro-USDC (6 decimals), as a string. 2500000 is 2.50 USDC. Used wherever a decimal would invite a rounding error - notably refund amounts.
       examples:
-      - error: INSUFFICIENT_BALANCE
-        action: CUSTOMER_ACTION_REQUIRED
+      - '2500000'
     ErrorCode:
       type: string
       enum:
@@ -334,19 +349,20 @@ components:
       - SPONSORED_PERMIT_FAILED
       - SPONSORSHIP_CONFIRMING
       description: Every code this API can return. Stable identifiers - branch on these, never on the human-readable text or the HTTP status alone.
-    Amount:
-      type: string
-      pattern: ^\d{1,12}(\.\d{1,6})?$
-      description: 'A USDC amount as a decimal string, up to 6 decimal places. Never a JSON number: binary floating point cannot represent most decimal prices exactly, and this is money.'
+    Error:
+      type: object
+      description: The uniform error envelope. `error` is the P2Flux code; `action` is what a merchant system should do about it, so integrations never hard-code that table themselves. Extra keys carry detail specific to the code (for example `retry_after`, `confirmations`, `as_of_block`).
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorCode'
+        action:
+          $ref: '#/components/schemas/MerchantAction'
+      additionalProperties: true
       examples:
-      - '10.00'
-      - '0.250000'
-    AmountUnits:
-      type: string
-      pattern: ^\d{1,20}$
-      description: An integer count of micro-USDC (6 decimals), as a string. 2500000 is 2.50 USDC. Used wherever a decimal would invite a rounding error - notably refund amounts.
-      examples:
-      - '2500000'
+      - error: INSUFFICIENT_BALANCE
+        action: CUSTOMER_ACTION_REQUIRED
     Address:
       type: string
       pattern: ^0x[0-9a-fA-F]{40}$
@@ -363,29 +379,13 @@ components:
       description: A 32-byte hex value, lowercase. Transaction hashes and references.
       examples:
       - '0x2d6bbc112885a6976289e599f71003f7d310e7152ebd662c6221dffd3e0da708'
-    MerchantAction:
+    Amount:
       type: string
-      enum:
-      - SUCCESS
-      - WAIT
-      - RETRY_LATER
-      - CUSTOMER_ACTION_REQUIRED
-      - STOP_SUBSCRIPTION
-      - INVALID_REQUEST
-      description: 'What to do about a result.
-
-
-        - `SUCCESS` - done, nothing owed.
-
-        - `WAIT` - **the money may already have moved.** The transaction exists and has not settled to the required depth. Ask again about the SAME transaction; never start another one. This is not a failure, and showing the customer an error here tells someone who has paid that they have not.
-
-        - `RETRY_LATER` - nothing happened; the identical call is safe to repeat on your own schedule.
-
-        - `CUSTOMER_ACTION_REQUIRED` - the customer must top up or re-approve.
-
-        - `STOP_SUBSCRIPTION` - terminal; stop charging this subscription.
-
-        - `INVALID_REQUEST` - permanent. Retrying returns the same answer forever; fix the request.'
+      pattern: ^\d{1,12}(\.\d{1,6})?$
+      description: 'A USDC amount as a decimal string, up to 6 decimal places. Never a JSON number: binary floating point cannot represent most decimal prices exactly, and this is money.'
+      examples:
+      - '10.00'
+      - '0.250000'
 externalDocs:
   description: Guides, flows and worked examples
   url: https://p2flux.com/docs/
