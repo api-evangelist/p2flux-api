@@ -771,12 +771,12 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    AmountUnits:
+    Bytes32:
       type: string
-      pattern: ^\d{1,20}$
-      description: An integer count of micro-USDC (6 decimals), as a string. 2500000 is 2.50 USDC. Used wherever a decimal would invite a rounding error - notably refund amounts.
+      pattern: ^0x[0-9a-f]{64}$
+      description: A 32-byte hex value, lowercase. Transaction hashes and references.
       examples:
-      - '2500000'
+      - '0x2d6bbc112885a6976289e599f71003f7d310e7152ebd662c6221dffd3e0da708'
     ErrorCode:
       type: string
       enum:
@@ -841,13 +841,6 @@ components:
       - SPONSORED_PERMIT_FAILED
       - SPONSORSHIP_CONFIRMING
       description: Every code this API can return. Stable identifiers - branch on these, never on the human-readable text or the HTTP status alone.
-    Amount:
-      type: string
-      pattern: ^\d{1,12}(\.\d{1,6})?$
-      description: 'A USDC amount as a decimal string, up to 6 decimal places. Never a JSON number: binary floating point cannot represent most decimal prices exactly, and this is money.'
-      examples:
-      - '10.00'
-      - '0.250000'
     Address:
       type: string
       pattern: ^0x[0-9a-fA-F]{40}$
@@ -859,12 +852,12 @@ components:
       pattern: ^0x[0-9a-fA-F]+$
       maxLength: 4096
       description: An EIP-712 signature. Contract wallets (ERC-1271) are supported.
-    Bytes32:
+    AmountUnits:
       type: string
-      pattern: ^0x[0-9a-f]{64}$
-      description: A 32-byte hex value, lowercase. Transaction hashes and references.
+      pattern: ^\d{1,20}$
+      description: An integer count of micro-USDC (6 decimals), as a string. 2500000 is 2.50 USDC. Used wherever a decimal would invite a rounding error - notably refund amounts.
       examples:
-      - '0x2d6bbc112885a6976289e599f71003f7d310e7152ebd662c6221dffd3e0da708'
+      - '2500000'
     Error:
       type: object
       description: The uniform error envelope. `error` is the P2Flux code; `action` is what a merchant system should do about it, so integrations never hard-code that table themselves. Extra keys carry detail specific to the code (for example `retry_after`, `confirmations`, `as_of_block`).
@@ -906,6 +899,13 @@ components:
       type: string
       maxLength: 8192
       description: 'A signed P2Flux capability: payment intent (p2f1.), setup token (p2setup2.), subscription capability (p2s2.), cancel token (p2cancel1.) or refund token (p2refund1.). Opaque to the caller and unforgeable - the signature is what authorises the call. Treat it as a bearer secret: keep it server-side, never in a URL query or a log.'
+    Amount:
+      type: string
+      pattern: ^\d{1,12}(\.\d{1,6})?$
+      description: 'A USDC amount as a decimal string, up to 6 decimal places. Never a JSON number: binary floating point cannot represent most decimal prices exactly, and this is money.'
+      examples:
+      - '10.00'
+      - '0.250000'
 externalDocs:
   description: Guides, flows and worked examples
   url: https://p2flux.com/docs/

@@ -145,6 +145,12 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Bytes32:
+      type: string
+      pattern: ^0x[0-9a-f]{64}$
+      description: A 32-byte hex value, lowercase. Transaction hashes and references.
+      examples:
+      - '0x2d6bbc112885a6976289e599f71003f7d310e7152ebd662c6221dffd3e0da708'
     ErrorCode:
       type: string
       enum:
@@ -215,12 +221,6 @@ components:
       description: An EVM address.
       examples:
       - '0xb4e43f3fBa5Add75395adAD366627E7d74141Fa9'
-    Bytes32:
-      type: string
-      pattern: ^0x[0-9a-f]{64}$
-      description: A 32-byte hex value, lowercase. Transaction hashes and references.
-      examples:
-      - '0x2d6bbc112885a6976289e599f71003f7d310e7152ebd662c6221dffd3e0da708'
     Error:
       type: object
       description: The uniform error envelope. `error` is the P2Flux code; `action` is what a merchant system should do about it, so integrations never hard-code that table themselves. Extra keys carry detail specific to the code (for example `retry_after`, `confirmations`, `as_of_block`).
