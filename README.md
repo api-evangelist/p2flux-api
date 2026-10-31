@@ -1,4 +1,4 @@
-# p2flux-api
+# P2Flux API
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,4 +64,124 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Non-custodial USDC payments API on the Base blockchain. Provides REST endpoints for one-time USDC payment intents with on-chain verification, recurring/subscription payments with merchant-triggered charges, and refunds. Payments are authorized per-request via HMAC-signed capabilities plus the payer'
+Non-custodial USDC payments API on the Base blockchain. Provides REST endpoints for one-time USDC payment intents with on-chain verification, recurring/subscription payments with merchant-triggered charges, and refunds. Payments are authorized per-request via HMAC-signed capabilities plus the payer's EIP-712 wallet signature — no signup, no dashboard, no issued credentials, and no custody of funds.
+
+**Areas:** Payments · Payment API · Cryptocurrency · Stablecoins · USDC · Base · Recurring Payments · Subscription · Refunds · Non-Custodial
+
+## P2Flux API on APIs.io
+
+Everything profiled for P2Flux API is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/p2flux-api/](https://apis.io/providers/p2flux-api/)** — or go straight to one of the APIs or properties below.
+
+### APIs (6)
+
+- [P2Flux API Cancellation API](https://apis.io/apis/p2flux-api/p2flux-api-cancellation-api/) — Unsigned calldata for the customer's own wallet to send.
+- [P2Flux API One-time payments API](https://apis.io/apis/p2flux-api/p2flux-api-one-time-payments-api/) — A single payment to a single recipient.
+- [P2Flux API Recurring payments API](https://apis.io/apis/p2flux-api/p2flux-api-recurring-payments-api/) — Signed once by the customer, charged by your renewal job.
+- [P2Flux API Refunds API](https://apis.io/apis/p2flux-api/p2flux-api-refunds-api/) — A transfer from the merchant's own wallet back to the wallet that paid.
+- [P2Flux API Service API](https://apis.io/apis/p2flux-api/p2flux-api-service-api/) — Liveness.
+- [P2Flux API Subscriptions API](https://apis.io/apis/p2flux-api/p2flux-api-subscriptions-api/) — The Subscriptions API from P2Flux API — 1 operation(s) for subscriptions.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [p2flux-api-mcp.yml](https://apis.io/servers/p2flux-api/p2flux-api-mcp-yml/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [P2Flux Api Openapi Overlay](https://apis.io/overlays/p2flux-api/p2flux-api-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [P2Flux Api Authentication](https://apis.io/security/p2flux-api/p2flux-api-authentication/)
+- [P2Flux Api Domain Security](https://apis.io/security/p2flux-api/p2flux-api-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [P2Flux Api Plans Pricing](https://apis.io/plans/p2flux-api/p2flux-api-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [P2Flux Api Rate Limits](https://apis.io/rate-limits/p2flux-api/p2flux-api-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://p2flux.com/)
+- [Documentation](https://p2flux.com/docs/)
+- [Getting started](https://p2flux.com/docs/quickstart.html)
+- [API reference](https://p2flux.com/docs/api.html)
+- [Pricing](https://p2flux.com/#pricing)
+- [Support](https://p2flux.com/integration-enquiries.html)
+- [Terms of service](https://p2flux.com/terms.html)
+- [Privacy policy](https://p2flux.com/privacy.html)
+- [GitHub](https://github.com/P2Flux)
+- [Status](https://p2flux.com/status.html)
+
+## API Evangelist rating
+
+**Kin Score 44.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 67.9 |
+| Contract quality | 46.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 70.8 |
+| Access clarity | 26.3 |
+
+**Agent readiness 36.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.3** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/p2flux-api/](https://apis.io/providers/p2flux-api/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for P2Flux API: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/p2flux-api/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
